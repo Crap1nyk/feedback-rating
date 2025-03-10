@@ -1,0 +1,114 @@
+/* LoginPage.css */
+
+body {
+    background-color: #f7f7f7;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .login-container {
+    display: flex;
+    justify-content: center; /* Align the content to the left */
+    align-items: center;
+    min-height: 100vh;
+    padding-left: 800px; /* Increased left padding for more space */
+    background-color: #f7f7f7;
+  }
+  
+  .login-form {
+    background-color: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    max-width: 500px;  /* Increased max-width for the form */
+    width: 100%;
+    text-align: center;
+    /* Larger font size */
+  }
+  
+  .logo-container {
+    margin-bottom: 30px;  /* Increased space for the logo */
+  }
+  
+  .logo {
+    width: 100px;  /* Increased logo size */
+    height: auto;
+    margin: 0 auto;
+  }
+  
+  .form-title {
+    font-size: 32px;  /* Increased font size for title */
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 30px;  /* Increased margin for spacing */
+  }
+  
+  .input-group {
+    margin-bottom: 25px;  /* Increased space between inputs */
+  }
+  
+  .input-label {
+    font-size: 16px;  /* Larger font for labels */
+    color: #555;
+    margin-bottom: 10px;
+    display: block;
+  }
+  
+  .input-field {
+    width: 100%;
+    padding: 15px;  /* Increased padding inside input fields */
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 18px;  /* Larger font inside the input field */
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  
+  .input-field:focus {
+    border-color: #5c6bc0;
+  }
+  
+  .submit-btn {
+    width: 100%;
+    padding: 18px;  /* Increased button padding */
+    background-color: #5c6bc0;
+    color: white;
+    font-size: 18px;  /* Increased font size */
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .submit-btn:hover {
+    background-color: #3f51b5;
+  }
+  
+  .submit-btn:disabled {
+    background-color: #c1c1c1;
+    cursor: not-allowed;
+  }
+  
+  .error-message {
+    color: #e74c3c;
+    font-size: 16px;  /* Larger error message font */
+    text-align: center;
+    margin-top: 20px;  /* More spacing around error message */
+  }
+  
+  .signup-prompt {
+    font-size: 16px;  /* Larger font size for signup prompt */
+    color: #555;
+    margin-top: 25px;  /* Increased spacing */
+  }
+  
+  .signup-link {
+    color: #5c6bc0;
+    text-decoration: none;
+  }
+  
+  .signup-link:hover {
+    text-decoration: underline;
+  }
+  
