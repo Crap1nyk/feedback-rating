@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect} from 'react';
 import Sidebar from './Sidebar';
 import TopNav from './TopNav';
 import QuestionDetail from './QuestionDetail';
 import * as XLSX from 'xlsx';
 import './App.css';
+import { auth } from './firebase';
+
+
 
 
 const questions = [
@@ -156,17 +159,27 @@ const questions = [
     const [selectedQuestion, setSelectedQuestion] = useState(questions[0]);
     const [selectedAnswerKey, setSelectedAnswerKey] = useState('A');
     const [ratings, setRatings] = useState({});
+    const [user, setUser] = useState(null);  // User state to store authenticated user
   
+    // Fetch the user from Firebase Auth when the component mounts
+    useEffect(() => {
+      const unsubscribe = auth.onAuthStateChanged(setUser); // Listen to auth changes
+      return () => unsubscribe(); // Unsubscribe on cleanup
+    }, []);
+  
+    // Handle selecting a question
     const handleSelectQuestion = (question) => {
       setSelectedQuestion(question);
       setSelectedAnswerKey('A'); // Reset to the first answer when switching questions
-      setRatings({});
+      setRatings({}); // Reset ratings
     };
   
+    // Handle selecting an answer
     const handleSelectAnswer = (answerKey) => {
       setSelectedAnswerKey(answerKey);
     };
   
+    // Handle rating changes
     const handleRatingChange = (param, value) => {
       setRatings((prev) => ({
         ...prev,
@@ -174,19 +187,56 @@ const questions = [
       }));
     };
   
+    // Calculate correctness of the answer
+    const getCorrectness = (question, answerKey) => {
+      return question.correctAnswer === answerKey; // Adjust the logic based on how correctness is determined
+    };
+  
+    // Calculate accuracy (directly from ratings)
+    const getAccuracy = (ratings) => {
+      const totalRatings = Object.values(ratings);
+      const accuracy = totalRatings.reduce((sum, rating) => sum + rating, 0);
+      return accuracy / totalRatings.length; // Average of all ratings (could be for clarity, completeness, etc.)
+    };
+  
+    // Calculate average rating from the ratings object
+    const calculateAvgRating = (ratings) => {
+      const totalRating = Object.values(ratings).reduce((sum, rating) => sum + rating, 0);
+      return totalRating / Object.values(ratings).length;
+    };
+  
     const saveToExcel = () => {
+      if (!user) {
+        alert('User is not authenticated!');
+        return;
+      }
+  
+      const userId = user.uid; // Firebase user ID
+      const questionId = selectedQuestion.id; // Assume selectedQuestion has an 'id' field
+      const answerId = selectedAnswerKey; // Answer ID (A, B, C, etc.)
+      const correctness = getCorrectness(selectedQuestion, selectedAnswerKey); // Determine correctness
+      const accuracy = getAccuracy(ratings) // Calculate accuracy based on ratings
+      const avgRating = calculateAvgRating(ratings); // Calculate average rating
+      
       const data = Object.entries(ratings).map(([param, value]) => ({
-        Question: selectedQuestion.question,
-        Answer: selectedQuestion.answers[selectedAnswerKey],
-        Parameter: param,
-        Rating: value,
+        userId: userId,
+        questionId: questionId,
+        answerId: answerId,
+        correctness: ratings.correctness,
+        accuracy:ratings.accuracy,
+        clarity: ratings.clarity || 0, // Example value for clarity
+        completeness: ratings.completeness || 0, // Example value for completeness
+        relevance: ratings.relevance || 0, // Example value for relevance
+        avgRating: avgRating, // Rating value for the parameter
       }));
   
       const ws = XLSX.utils.json_to_sheet(data);
       const wb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, 'Ratings');
       XLSX.writeFile(wb, 'ratings.xlsx');
+      console.log(data)
     };
+  
   
     return (
       <div className="app">

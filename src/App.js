@@ -161,7 +161,7 @@ const App = () => {
   const [selectedQuestion, setSelectedQuestion] = useState(questions[0]);
   const [selectedAnswerKey, setSelectedAnswerKey] = useState('A');
   const [ratings, setRatings] = useState({});
-  
+
   const { user } = useAuth();  // Get user from AuthContext
 
   const handleSelectQuestion = (question) => {
@@ -182,18 +182,57 @@ const App = () => {
   };
 
   const saveToExcel = () => {
+    // Assuming you have the following values:
+    const userId = user.id; // User ID from auth context
+    const questionId = selectedQuestion.id; // Question ID (e.g., 1)
+    const answerId = selectedAnswerKey; // Answer ID (A, B, C, etc.)
+    const correctness = getCorrectness(selectedQuestion, selectedAnswerKey); // Function to check correctness (true/false)
+    const accuracy = getAccuracy(selectedQuestion, selectedAnswerKey); // Function to get accuracy value (number)
+    const avgRating = calculateAvgRating(ratings); // Function to calculate average rating from the `ratings` object
+
+    // Create data array with additional fields
     const data = Object.entries(ratings).map(([param, value]) => ({
-      Question: selectedQuestion.question,
-      Answer: selectedQuestion.answers[selectedAnswerKey],
+      userId: userId,
+      questionId: questionId,
+      answerId: answerId,
+      correctness: correctness,
+      accuracy: accuracy,
+      avgRating: avgRating,
       Parameter: param,
       Rating: value,
     }));
 
+    // Create Excel worksheet
     const ws = XLSX.utils.json_to_sheet(data);
+
+    // Create a new Excel workbook
     const wb = XLSX.utils.book_new();
+
+    // Append the worksheet to the workbook
     XLSX.utils.book_append_sheet(wb, ws, 'Ratings');
+
+    // Write the file to the user's system
     XLSX.writeFile(wb, 'ratings.xlsx');
   };
+
+  // Helper functions to get correctness, accuracy, and avgRating
+  const getCorrectness = (question, answerKey) => {
+    // Logic to determine if the answer is correct
+    return question.correctAnswer === answerKey; // Assuming question has a `correctAnswer` field
+  };
+
+  const getAccuracy = (question, answerKey) => {
+    // Logic to calculate accuracy (can be based on some factor or user-specific data)
+    return Math.random() * 100; // Placeholder for accuracy calculation, modify based on your requirements
+  };
+
+  const calculateAvgRating = (ratings) => {
+    const totalRating = Object.values(ratings).reduce((sum, rating) => sum + rating, 0);
+    return totalRating / Object.values(ratings).length;
+  };
+
+
+
 
   return (
     <Router>
@@ -208,7 +247,7 @@ const App = () => {
 
         {/* Default Route for Home page */}
         <Route
-          path="/questions"
+          path="/login"
           element={
             user ? (
               <>

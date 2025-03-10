@@ -21,7 +21,7 @@ const SignupPage = () => {
     <div className="login-container">
       <div className="login-form">
         <div className="logo-container">
-          <img src="/logo512.png" alt="Logo" className="logo" />
+          <img src="/OIP.jpeg" alt="Logo" className="logo" />
         </div>
         <h2 className="form-title">Create Account</h2>
 

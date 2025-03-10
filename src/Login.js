@@ -22,10 +22,10 @@ const LoginPage = () => {
       <div className="login-form">
         {/* Space for logo */}
         <div className="logo-container">
-          <img src="/logo192.png" alt="Logo" className="logo" />
+          <img src="/OIP.jpeg" alt="Logo" className="logo" />
         </div>
 
-        <h2 className="form-title">Welcome Back!</h2>
+        <h2 className="form-title">Login</h2>
 
         <form onSubmit={handleSubmit}>
           <div className="input-group">
