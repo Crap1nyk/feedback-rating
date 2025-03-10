@@ -239,7 +239,7 @@ const App = () => {
     <div className="app">
       <Routes>
         {/* Route for Login page */}
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
 
         {/* Route for Signup page */}
         <Route path="/signup" element={<Signup />} />
@@ -271,9 +271,7 @@ const App = () => {
               </>
             ) : (
               // If user is not logged in, show login/signup links
-              <div>
-                Please <a href="/login">Login</a> or <a href="/signup">Signup</a>
-              </div>
+             <Login />
             )
           }
         />
