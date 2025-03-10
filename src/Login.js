@@ -1,18 +1,23 @@
 import React, { useState } from 'react';
 import { useAuth } from './AuthContext';
+import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
-  const { handleLogin } = useAuth(); // Get login function from context
+const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { handleLogin, loading, error } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     await handleLogin(email, password);
+    if (!error) {
+      navigate('/feedback'); // Redirect to dashboard after successful login
+    }
   };
 
   return (
-    <div className="auth-form">
+    <div>
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <input
@@ -20,19 +25,20 @@ const Login = () => {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          required
         />
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          required
         />
-        <button type="submit">Login</button>
+        <button type="submit" disabled={loading}>
+          {loading ? 'Logging In...' : 'Login'}
+        </button>
       </form>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
   );
 };
 
-export default Login;
+export default LoginPage;

@@ -1,7 +1,7 @@
 import React from 'react';
 import './Rating.css';
 
-const RatingSelector = ({ ratings, onRatingChange }) => {
+const RatingSelector = ({ ratings, onRatingChange, onSubmit }) => {
   const parameters = ['correctness', 'accuracy', 'clarity', 'completeness', 'relevance'];
 
   const renderStars = (param) => {
@@ -23,13 +23,27 @@ const RatingSelector = ({ ratings, onRatingChange }) => {
   };
 
   return (
-    <div className="rating-container">
-      {parameters.map((param) => (
-        <div key={param} className="rating-item">
-          <label>{param.charAt(0).toUpperCase() + param.slice(1)}:</label>
-          {renderStars(param)}
-        </div>
-      ))}
+    <div className="rating-table-container">
+      <table className="rating-table">
+        <thead>
+          <tr>
+            {parameters.map((param) => (
+              <th key={param}>{param.charAt(0).toUpperCase() + param.slice(1)}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            {parameters.map((param) => (
+              <td key={param}>{renderStars(param)}</td>
+            ))}
+          </tr>
+        </tbody>
+      </table>
+
+      <button className="submit-button" onClick={onSubmit}>
+        Submit
+      </button>
     </div>
   );
 };

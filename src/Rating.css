@@ -1,68 +1,52 @@
-.rating-container {
+.rating-table-container {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  margin-top: 10px;
+  align-items: center;
+  margin: 20px;
 }
 
-.rating-item {
-  display: flex;
-  flex-direction: column;
+.rating-table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 20px;
 }
 
-.rating-container label {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 5px;
+.rating-table th,
+.rating-table td {
+  border: 1px solid #ddd;
+  text-align: center;
+  padding: 12px;
 }
 
 .stars {
   display: flex;
-  gap: 8px;
-  cursor: pointer;
+  justify-content: center;
 }
 
 .star {
+  cursor: pointer;
   font-size: 24px;
   color: #ccc;
-  transition: color 0.2s;
+  margin: 0 4px;
+  transition: color 0.2s ease-in-out;
 }
 
 .star.filled {
   color: gold;
 }
 
-/* OPTIONAL: scale on click for a little feedback */
-.star:active {
-  transform: scale(1.2);
-}
-.save-button {
-  display: inline-block;
-  background: linear-gradient(135deg, #27ae60, #2ecc71);
-  color: #fff;
-  font-size: 16px;
-  font-weight: 600;
+.submit-button {
+  background-color: #4CAF50;
+  color: white;
   padding: 12px 24px;
   border: none;
-  border-radius: 8px;
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: background-color 0.3s;
 }
 
-.save-button:hover {
-  background: linear-gradient(135deg, #2ecc71, #27ae60);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-  transform: translateY(-2px);
-}
-
-.save-button:active {
-  transform: translateY(1px);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.save-button:disabled {
-  background: #bdc3c7;
-  cursor: not-allowed;
-  box-shadow: none;
+.submit-button:hover {
+  background-color: #45a049;
 }

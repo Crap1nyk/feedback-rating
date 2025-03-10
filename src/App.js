@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect} from 'react';
 import Sidebar from './Sidebar';
 import TopNav from './TopNav';
 import QuestionDetail from './QuestionDetail';
 import * as XLSX from 'xlsx';
 import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { AuthProvider, useAuth } from './AuthContext';
+import Login from './Login';
+import Signup from './Signup';
+import Feedback from './Feedback';
+
 
 const questions = [
   {
@@ -11,7 +17,7 @@ const questions = [
     question: "Can I take benefit of presumptive scheme in LLP or company?",
     answers: {
       A: "Consequences of Default in Payment of Advance Tax If an assessee fails to pay advance tax, they shall be liable to pay interest under Section 234B for default in payment of advance tax and Section 234C for deferment of payment of advance tax. The interest under Section 234B is levied if the advance tax paid by the due date of filing return of income is less than 90% of the assessed tax. The interest under Section 234C is levied if the advance tax paid in an instalment is less than the prescribed percentage. The prescribed percentages for payment of advance tax in instalments are as follows: Due date for payment of advance tax - Advance tax to be payable: On or before June 15 of the previous year - At least 15% of advance tax. On or before September 15 of the previous year - At least 45% of advance tax. On or before December 15 of the previous year - At least 75% of advance tax. On or before March 15 of the previous year - 100% of advance tax. The rate of interest under Section 234C is 1% per month or part thereof. Assumptions: The user is an Indian resident. The user has a tax liability of Rs. 10,000 or more. Clarifications: The user should consult a tax professional to determine the exact amount of interest payable under Section 234B and Section 234C. The user should ensure that they pay the advance tax in accordance with the prescribed due dates to avoid interest liability. Note: The above response is based on the provided context and is intended to provide general information only. It is not intended to be a substitute for professional tax advice. Users are advised to consult a tax professional for specific guidance on their individual tax situations. Primary Parent Topics: Interest and Fees - Interest for deferment of Advance Tax, Advance Tax - Advance Tax. Disclaimer: The information contained in this communication is intended solely for the use of the individual or entity to whom it is addressed and others authorized to receive it. It may contain confidential or legally privileged information. If you are not the intended recipient, you are hereby notified that any disclosure, copying, distribution, or taking any action in reliance on the contents of this information is strictly prohibited and may be unlawful. If you have received this communication in error, please notify us immediately by responding to this email and then delete it from your system. The firm is neither liable for the proper and complete transmission of the information contained in this communication nor for any delay in its receipt.",
-      B: ` 
+      B:  `
       Legal Research Memorandum
       
       Issue
@@ -69,18 +75,20 @@ const questions = [
       Disclaimer
       • This legal analysis is provided for informational purposes only and should not be considered as a substitute for professional legal advice. The information presented may not be up-to-date or applicable to your specific situation.
       • It is recommended to consult with a licensed tax professional or advocate to obtain personalized legal advice and to ensure compliance with the relevant laws and regulations.
-      • The analysis is based on the information provided in the sections, and the accuracy of the information cannot be guaranteed.` ,
+      • The analysis is based on the information provided in the sections, and the accuracy of the information cannot be guaranteed.
+            `,
       C: "Overview of Presumptive Taxation Presumptive taxation in India is designed to simplify tax compliance for small taxpayers by allowing them to declare income at a prescribed rate in lieu of maintaining detailed records. This scheme is available under different sections of the Income Tax Act: Section 44AD: For small businesses. Section 44ADA: For specified professionals. Section 44AE: For taxpayers engaged in the business of plying, hiring, or leasing goods carriages. Eligibility Under Sections 44AD & 44ADA Section 44AD: This scheme is principally available to resident individuals, Hindu Undivided Families (HUFs), and partnership firms. The eligibility specifically excludes Limited Liability Partnership (LLP) firms. As stated in the documents: Resident Partnership Firm (not Limited Liability Partnership Firm) [1] There is no explicit indication in these sections that companies can opt for the scheme for business income. Section 44ADA: This scheme, meant for specified professionals, is available only to resident individuals and partnership firms (other than LLPs). The Finance Act, 2021 has amended ... benefit of section 44ADA is eligible only ... Partnership firm (other than LLP) [1] Thus, LLPs are explicitly excluded, and companies are not covered under this provision. Eligibility Under Section 44AE for Goods Carriage Business Section 44AE applies to taxpayers engaged in the business of plying, hiring, or leasing goods carriages. This section is broader in that it includes every person such as individuals, HUFs, partnership firms, and companies, provided the business meets the stipulated criteria (e.g., not owning more than 10 goods vehicles at any time during the year). The presumptive taxation scheme of section 44AE ... is applicable to every person (i.e., an individual, HUF, firm, company, etc.) [1] There is no similar provision available for LLPs under Section 44AE, which reinforces that LLPs remain ineligible unless covered by another specific provision. Filing Implications ITR-4 (SUGAM) is designed for those opting for presumptive taxation (individuals, HUFs, and partnership firms excluding LLPs). ITR – 4 (SUGAM) ... Available to individuals, Hindu Undivided Family, or partnership firms opting for the presumptive taxation scheme [2] LLPs and companies typically file returns under ITR-5 or ITR-6, which do not incorporate presumptive taxation benefits -- except, as noted, where a company falls under Section 44AE. Summary Table Entity Type - Section 44AD/44ADA Eligibility - Section 44AE Eligibility LLP - Excluded (explicitly mentioned as not LLP in the provisions) [1][1] - No specific provision for LLPs under 44AE Company - Generally not eligible (no explicit provision for companies) - Eligible if engaged in the goods carriage business and meeting conditions [1] Final Answer For LLPs: LLPs cannot take advantage of the presumptive taxation schemes under Sections 44AD and 44ADA as they are explicitly excluded. For Companies: Companies are generally not eligible to opt for the presumptive taxation scheme under Sections 44AD and 44ADA. However, if a company is involved in the business of plying, hiring, or leasing goods carriages and meets all requirements under Section 44AE, it may benefit from the presumptive taxation scheme in that specific context. Given the current context and provided documents, this is the comprehensive interpretation of the eligibility issues related to presumptive taxation for LLPs and companies in India as of today's date, 2025-03-05.",
-      D:` According to the provisions of section 44ADA, the presumptive scheme is applicable to resident assessees who are individuals, Hindu Undivided Families (HUF), or partnership firms, but it expressly excludes Limited Liability Partnerships (LLPs). The Finance Act, 2021 further clarified that the provisions of section 44ADA apply to an assessee being an individual, HUF, or partnership firm, not being an LLP.
+      D: `According to the provisions of section 44ADA, the presumptive scheme is applicable to resident assessees who are individuals, Hindu Undivided Families (HUF), or partnership firms, but it expressly excludes Limited Liability Partnerships (LLPs). The Finance Act, 2021 further clarified that the provisions of section 44ADA apply to an assessee being an individual, HUF, or partnership firm, not being an LLP.
 
       Therefore, LLPs and companies are not eligible to take advantage of the presumptive scheme under section 44ADA.
       
       In summary: 1. The presumptive scheme under section 44ADA is applicable to: - Individuals - Hindu Undivided Families (HUF) - Partnership firms (excluding LLPs)
       
       LLPs and companies are explicitly excluded from availing the benefits of this presumptive scheme.
-      Reference: [1]1 Sampath Volume 5 (13th Edition)`,
-      E: 
-      `
+      Reference: [1]1 Sampath Volume 5 (13th Edition)
+      
+      `,
+      E: `
       The query pertains to the applicability of the presumptive taxation scheme for Limited Liability Partnerships (LLPs) and companies under Indian Income Tax laws. Presumptive taxation schemes are designed to simplify the tax compliance process for small taxpayers by allowing them to declare income at a prescribed rate of turnover or gross receipts, thereby reducing the burden of maintaining detailed books of accounts. However, the eligibility criteria for these schemes are specific and exclude certain entities. 
       
       Applicable Sections and Rules 
@@ -131,9 +139,9 @@ const questions = [
       
       Sections: 44AD, 44ADA, 44AE of the Income Tax Act, 1961 
       
-      Circulars: CBDT guidelines on presumptive taxation `
+      Circulars: CBDT guidelines on presumptive taxation 
       
-      ,
+      `,
     },
   },
   {
@@ -153,6 +161,8 @@ const App = () => {
   const [selectedQuestion, setSelectedQuestion] = useState(questions[0]);
   const [selectedAnswerKey, setSelectedAnswerKey] = useState('A');
   const [ratings, setRatings] = useState({});
+  
+  const { user } = useAuth();  // Get user from AuthContext
 
   const handleSelectQuestion = (question) => {
     setSelectedQuestion(question);
@@ -186,20 +196,56 @@ const App = () => {
   };
 
   return (
+    <Router>
     <div className="app">
-      <Sidebar questions={questions} onSelectQuestion={handleSelectQuestion} />
-      <div className="content">
-        <TopNav selectedAnswerKey={selectedAnswerKey} onSelectAnswer={handleSelectAnswer} />
-        <QuestionDetail
-          selectedQuestion={selectedQuestion}
-          selectedAnswerKey={selectedAnswerKey}
-          ratings={ratings}
-          onRatingChange={handleRatingChange}
-          onSaveToExcel={saveToExcel}
+      <Routes>
+        {/* Route for Login page */}
+        <Route path="/login" element={<Login />} />
+
+        {/* Route for Signup page */}
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/feedback" element={<Feedback />} />
+
+        {/* Default Route for Home page */}
+        <Route
+          path="/questions"
+          element={
+            user ? (
+              <>
+                {/* Sidebar for displaying questions */}
+                <Sidebar questions={questions} onSelectQuestion={handleSelectQuestion} />
+
+                {/* Content area */}
+                <div className="content">
+                  {/* Top navigation */}
+                  <TopNav selectedAnswerKey={selectedAnswerKey} onSelectAnswer={handleSelectAnswer} />
+
+                  {/* Question detail section */}
+                  <QuestionDetail
+                    selectedQuestion={selectedQuestion}
+                    selectedAnswerKey={selectedAnswerKey}
+                    ratings={ratings}
+                    onRatingChange={handleRatingChange}
+                    onSaveToExcel={saveToExcel}
+                  />
+                </div>
+              </>
+            ) : (
+              // If user is not logged in, show login/signup links
+              <div>
+                Please <a href="/login">Login</a> or <a href="/signup">Signup</a>
+              </div>
+            )
+          }
         />
-      </div>
+      </Routes>
     </div>
-  );
+  </Router>
+);
 };
 
-export default App;
+export default () => (
+  <AuthProvider>
+    <App />
+  </AuthProvider>
+);
