@@ -2,19 +2,32 @@ import React from 'react';
 import './Rating.css';
 
 const RatingSelector = ({ ratings, onRatingChange }) => {
+  const parameters = ['correctness', 'accuracy', 'clarity', 'completeness', 'relevance'];
+
+  const renderStars = (param) => {
+    const currentRating = ratings[param] || 0;
+
+    return (
+      <div className="stars">
+        {[1, 2, 3, 4, 5].map((star) => (
+          <span
+            key={star}
+            className={`star ${star <= currentRating ? 'filled' : ''}`}
+            onClick={() => onRatingChange(param, star)}
+          >
+            ★
+          </span>
+        ))}
+      </div>
+    );
+  };
+
   return (
-    <div>
-      {['correctness', 'accuracy', 'clarity', 'completeness', 'relevance'].map((param) => (
-        <div key={param}>
+    <div className="rating-container">
+      {parameters.map((param) => (
+        <div key={param} className="rating-item">
           <label>{param.charAt(0).toUpperCase() + param.slice(1)}:</label>
-          <select value={ratings[param] || 0} onChange={(e) => onRatingChange(param, e.target.value)}>
-            <option value="0">Select</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
+          {renderStars(param)}
         </div>
       ))}
     </div>

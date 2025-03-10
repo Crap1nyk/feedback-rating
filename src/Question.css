@@ -16,3 +16,26 @@
     margin-bottom: 15px;
   }
   
+  .save-button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 12px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .save-button:hover {
+    background-color: #45a049;
+  }
+  
+  .save-button:active {
+    background-color: #3e8e41;
+  }
+  
