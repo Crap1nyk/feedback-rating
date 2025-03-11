@@ -8,21 +8,31 @@ const QuestionDetail = ({ selectedQuestion, selectedAnswerKey, ratings, onRating
       {/* Question Title */}
       <h3>{selectedQuestion.question}</h3>
 
-      {/* Answer Content inside a <pre> tag */}
-      <pre
-        className="answer-content"
+      {/* Scrollable Answer Content */}
+      <div
+        className="answer-container"
         style={{
-          whiteSpace: 'pre-wrap',      // Ensures long lines wrap nicely
-          backgroundColor: '#f8f8f8',  // Light background
-          padding: '1em',              // Padding for spacing
-          borderRadius: '5px',         // Rounded corners
-          fontFamily: 'serif',     // Monospaced font for code-like appearance
-          lineHeight: '1.5',           // Better readability
-          marginTop: '1em'
+          maxHeight: '300px',          // Adjust height as needed
+          overflowY: 'auto',           // Enables vertical scrolling
+          backgroundColor: '#f8f8f8',
+          padding: '1em',
+          borderRadius: '5px',
+          marginTop: '1em',
+          border: '1px solid #ddd'
         }}
       >
-        {selectedQuestion.answers[selectedAnswerKey]}
-      </pre>
+        <pre
+          className="answer-content"
+          style={{
+            whiteSpace: 'pre-wrap',
+            fontFamily: 'serif',
+            lineHeight: '1.5',
+            margin: 0                 // Remove margin to fit the container nicely
+          }}
+        >
+          {selectedQuestion.answers[selectedAnswerKey]}
+        </pre>
+      </div>
 
       {/* Rating Selector */}
       <RatingSelector ratings={ratings} onRatingChange={onRatingChange} />

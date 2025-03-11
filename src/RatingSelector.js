@@ -41,9 +41,6 @@ const RatingSelector = ({ ratings, onRatingChange, onSubmit }) => {
         </tbody>
       </table>
 
-      <button className="submit-button" onClick={onSubmit}>
-        Submit
-      </button>
     </div>
   );
 };

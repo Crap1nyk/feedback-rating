@@ -215,33 +215,33 @@ References:
         alert('User is not authenticated!');
         return;
       }
-  
-      const userId = user.uid; // Firebase user ID
-      const questionId = selectedQuestion.id; // Assume selectedQuestion has an 'id' field
-      const answerId = selectedAnswerKey; // Answer ID (A, B, C, etc.)
-      const correctness = getCorrectness(selectedQuestion, selectedAnswerKey); // Determine correctness
-      const accuracy = getAccuracy(ratings) // Calculate accuracy based on ratings
-      const avgRating = calculateAvgRating(ratings); // Calculate average rating
-      
-      const data = Object.entries(ratings).map(([param, value]) => ({
-        userId: userId,
+    
+      const username = user?.displayName || 'Unknown User'
+      const questionId = selectedQuestion.id;
+      const answerId = selectedAnswerKey;
+      const correctness = getCorrectness(selectedQuestion, selectedAnswerKey);
+      const avgRating = calculateAvgRating(ratings);
+    
+      const data = [{
+        username: username,
         questionId: questionId,
         answerId: answerId,
-        correctness: ratings.correctness,
-        accuracy:ratings.accuracy,
-        clarity: ratings.clarity || 0, // Example value for clarity
-        completeness: ratings.completeness || 0, // Example value for completeness
-        relevance: ratings.relevance || 0, // Example value for relevance
-        avgRating: avgRating, // Rating value for the parameter
-      }));
-  
+        correctness: ratings.correctness || 0, // Assuming it's true/false, you can change as needed
+        accuracy: ratings.accuracy || 0,
+        clarity: ratings.clarity || 0,
+        completeness: ratings.completeness || 0,
+        relevance: ratings.relevance || 0,
+        avgRating: avgRating || 0,
+      }];
+    
       const ws = XLSX.utils.json_to_sheet(data);
       const wb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, 'Ratings');
       XLSX.writeFile(wb, 'ratings.xlsx');
-      console.log(data)
+    
+      console.log(data);
     };
-  
+    
   
     return (
       <div className="app">

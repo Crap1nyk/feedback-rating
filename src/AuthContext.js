@@ -1,6 +1,13 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
-import { auth } from './firebase'; // Assuming you have initialized Firebase in a firebase.js file
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+  updateProfile
+} from 'firebase/auth';
+import { auth, db } from './firebase'; // Make sure db is exported from firebase.js
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 
 const AuthContext = createContext();
 
@@ -11,12 +18,31 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const handleSignup = async (email, password) => {
+  // 🔹 SIGN UP FUNCTION
+  const handleSignup = async (email, password, name) => {
     setLoading(true);
     setError(null);
     try {
+      // Create user account with email & password
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      console.log('Signup successful:', userCredential.user);
+      const user = userCredential.user;
+
+      // Update Firebase Auth profile with displayName
+      await updateProfile(user, {
+        displayName: name
+      });
+
+      console.log('Signup successful:', user);
+
+      // Optional: Save extra user data in Firestore
+      await setDoc(doc(db, 'users', user.uid), {
+        uid: user.uid,
+        name: name,
+        email: email,
+        createdAt: serverTimestamp()
+      });
+
+      console.log('User data saved to Firestore');
     } catch (error) {
       console.error('Error during signup:', error.message);
       setError(error.message);
@@ -25,6 +51,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // 🔹 LOGIN FUNCTION
   const handleLogin = async (email, password) => {
     setLoading(true);
     setError(null);
@@ -39,6 +66,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // 🔹 LOGOUT FUNCTION
   const handleLogout = async () => {
     setLoading(true);
     setError(null);
@@ -53,6 +81,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // 🔹 MONITOR USER STATE CHANGES
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
@@ -62,7 +91,16 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ currentUser, handleSignup, handleLogin, handleLogout, loading, error }}>
+    <AuthContext.Provider
+      value={{
+        currentUser,
+        handleSignup,
+        handleLogin,
+        handleLogout,
+        loading,
+        error
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
