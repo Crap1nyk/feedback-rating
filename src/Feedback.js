@@ -161,30 +161,43 @@ References:
 
 
   const Feedback = () => {
-    const [selectedQuestion, setSelectedQuestion] = useState(questions[0]);
+    const [selectedQuestion, setSelectedQuestion] = useState(null);
     const [selectedAnswerKey, setSelectedAnswerKey] = useState('A');
     const [ratings, setRatings] = useState({});
-    const [user, setUser] = useState(null);  // User state to store authenticated user
+    const [user, setUser] = useState(null);
+    const [reviewStatus, setReviewStatus] = useState({});
+    const [reviewDataList, setReviewDataList] = useState([]); // NEW STATE TO STORE ALL REVIEWS
   
-    // Fetch the user from Firebase Auth when the component mounts
+    // Load user on mount
     useEffect(() => {
-      const unsubscribe = auth.onAuthStateChanged(setUser); // Listen to auth changes
-      return () => unsubscribe(); // Unsubscribe on cleanup
+      const unsubscribe = auth.onAuthStateChanged(setUser);
+      return () => unsubscribe();
     }, []);
   
-    // Handle selecting a question
+    // Set default selectedQuestion when questions are loaded
+    useEffect(() => {
+      if (questions.length > 0) {
+        setSelectedQuestion(questions[0]);
+        setSelectedAnswerKey('A');
+        setRatings({});
+      }
+    }, []);
+  
+    if (!questions || questions.length === 0 || !selectedQuestion) {
+      return <div>Loading questions...</div>;
+    }
+  
     const handleSelectQuestion = (question) => {
       setSelectedQuestion(question);
-      setSelectedAnswerKey('A'); // Reset to the first answer when switching questions
-      setRatings({}); // Reset ratings
+      setSelectedAnswerKey('A');
+      setRatings({});
     };
   
-    // Handle selecting an answer
     const handleSelectAnswer = (answerKey) => {
       setSelectedAnswerKey(answerKey);
+      setRatings({});
     };
   
-    // Handle rating changes
     const handleRatingChange = (param, value) => {
       setRatings((prev) => ({
         ...prev,
@@ -192,22 +205,55 @@ References:
       }));
     };
   
-    // Calculate correctness of the answer
     const getCorrectness = (question, answerKey) => {
-      return question.correctAnswer === answerKey; // Adjust the logic based on how correctness is determined
+      return question.correctAnswer === answerKey;
     };
   
-    // Calculate accuracy (directly from ratings)
-    const getAccuracy = (ratings) => {
-      const totalRatings = Object.values(ratings);
-      const accuracy = totalRatings.reduce((sum, rating) => sum + rating, 0);
-      return accuracy / totalRatings.length; // Average of all ratings (could be for clarity, completeness, etc.)
-    };
-  
-    // Calculate average rating from the ratings object
     const calculateAvgRating = (ratings) => {
-      const totalRating = Object.values(ratings).reduce((sum, rating) => sum + rating, 0);
-      return totalRating / Object.values(ratings).length;
+      const ratingValues = Object.values(ratings);
+      if (ratingValues.length === 0) return 0;
+      const total = ratingValues.reduce((sum, r) => sum + r, 0);
+      return total / ratingValues.length;
+    };
+  
+    const handleSubmit = () => {
+      if (!user) {
+        alert('User is not authenticated!');
+        return;
+      }
+  
+      const username = user?.displayName || 'Unknown User';
+      const questionId = selectedQuestion.id;
+      const answerId = selectedAnswerKey;
+      const correctness = getCorrectness(selectedQuestion, answerId);
+      const avgRating = calculateAvgRating(ratings);
+  
+      const reviewData = {
+        username,
+        questionId,
+        answerId,
+        correctness: correctness ? 1 : 0,
+        accuracy: ratings.accuracy || 0,
+        clarity: ratings.clarity || 0,
+        completeness: ratings.completeness || 0,
+        relevance: ratings.relevance || 0,
+        avgRating: avgRating || 0,
+      };
+  
+      // Save the review to our reviewDataList
+      setReviewDataList((prevList) => [...prevList, reviewData]);
+  
+      console.log('Submitting review:', reviewData);
+      alert('Review submitted successfully!');
+  
+      // Update reviewStatus after submission
+      setReviewStatus((prevStatus) => ({
+        ...prevStatus,
+        [questionId]: {
+          ...(prevStatus[questionId] || {}),
+          [answerId]: true,
+        },
+      }));
     };
   
     const saveToExcel = () => {
@@ -215,50 +261,58 @@ References:
         alert('User is not authenticated!');
         return;
       }
-    
-      const username = user?.displayName || 'Unknown User'
-      const questionId = selectedQuestion.id;
-      const answerId = selectedAnswerKey;
-      const correctness = getCorrectness(selectedQuestion, selectedAnswerKey);
-      const avgRating = calculateAvgRating(ratings);
-    
-      const data = [{
-        username: username,
-        questionId: questionId,
-        answerId: answerId,
-        correctness: ratings.correctness || 0, // Assuming it's true/false, you can change as needed
-        accuracy: ratings.accuracy || 0,
-        clarity: ratings.clarity || 0,
-        completeness: ratings.completeness || 0,
-        relevance: ratings.relevance || 0,
-        avgRating: avgRating || 0,
-      }];
-    
-      const ws = XLSX.utils.json_to_sheet(data);
+  
+      if (reviewDataList.length === 0) {
+        alert('No reviews submitted yet!');
+        return;
+      }
+  
+      const ws = XLSX.utils.json_to_sheet(reviewDataList);
       const wb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, 'Ratings');
       XLSX.writeFile(wb, 'ratings.xlsx');
-    
-      console.log(data);
     };
-    
+  
+    // Count reviewed sections for progress display
+    const sections = ['A', 'B', 'C', 'D', 'E'];
+    const totalSections = questions.length * sections.length;
+    const reviewedSections = Object.values(reviewStatus).reduce((acc, questionReviews) => {
+      return acc + Object.values(questionReviews || {}).filter((reviewed) => reviewed).length;
+    }, 0);
   
     return (
       <div className="app">
-        <Sidebar questions={questions} onSelectQuestion={handleSelectQuestion} />
+        <Sidebar
+          questions={questions}
+          onSelectQuestion={handleSelectQuestion}
+          reviewStatus={reviewStatus}
+        />
+  
         <div className="content">
-          <TopNav selectedAnswerKey={selectedAnswerKey} onSelectAnswer={handleSelectAnswer} />
+          <TopNav
+            selectedAnswerKey={selectedAnswerKey}
+            onSelectAnswer={handleSelectAnswer}
+          />
+  
           <QuestionDetail
             selectedQuestion={selectedQuestion}
             selectedAnswerKey={selectedAnswerKey}
             ratings={ratings}
             onRatingChange={handleRatingChange}
-            onSaveToExcel={saveToExcel}
+            onSaveToExcel={saveToExcel} // optional, if needed in QuestionDetail
           />
+  
+          <div style={{ padding: '10px', marginTop: '20px' }}>
+            <strong>{reviewedSections} / {totalSections} sections reviewed</strong>
+          </div>
+  
+          <div style={{ padding: '10px', marginTop: '20px', display: 'flex', gap: '10px' }}>
+            <button id='b1' onClick={handleSubmit}>Submit Review</button>
+            <button id='b2' onClick={saveToExcel}>Download Excel</button>
+          </div>
         </div>
       </div>
     );
   };
   
   export default Feedback;
-  

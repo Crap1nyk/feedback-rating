@@ -1,32 +1,51 @@
 .sidebar {
-    width: 250px;
-    height: 100vh;
-    background: #2c3e50;
-    color: white;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    border-right: 2px solid #34495e;
-  }
-  
-  .sidebar h2 {
-    font-size: 18px;
-    margin-bottom: 15px;
-  }
-  
-  .sidebar button {
-    background: #34495e;
-    color: white;
-    border: none;
-    padding: 10px;
-    text-align: left;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: 0.3s;
-  }
-  
-  .sidebar button:hover {
-    background: #1abc9c;
-  }
-  
+  width: 250px;
+  height: 100vh;
+  background: #2c3e50;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-right: 2px solid #34495e;
+  overflow-y: auto;
+}
+
+.sidebar h2 {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.question-block {
+  margin-bottom: 20px;
+}
+
+.section-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.sidebar button {
+  background: #34495e;
+  color: white;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: 0.3s;
+  font-size: 14px;
+}
+
+.sidebar button:hover {
+  background: #1abc9c;
+}
+
+.sidebar button.reviewed {
+  background-color: #27ae60; /* Green for reviewed */
+  color: white;
+}
+
+.reviewed-indicator {
+  margin-left: 5px;
+}

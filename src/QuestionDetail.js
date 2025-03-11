@@ -38,12 +38,7 @@ const QuestionDetail = ({ selectedQuestion, selectedAnswerKey, ratings, onRating
       <RatingSelector ratings={ratings} onRatingChange={onRatingChange} />
 
       {/* Save to Excel Button */}
-      <button
-        onClick={onSaveToExcel}
-        className="save-button"
-      >
-        💾 Save Ratings to Excel
-      </button>
+    
     </div>
   );
 };
