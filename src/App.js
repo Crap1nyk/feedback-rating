@@ -16,7 +16,26 @@ const questions = [
     id: 1,
     question: "Can I take benefit of presumptive scheme in LLP or company?",
     answers: {
-      A: "Consequences of Default in Payment of Advance Tax If an assessee fails to pay advance tax, they shall be liable to pay interest under Section 234B for default in payment of advance tax and Section 234C for deferment of payment of advance tax. The interest under Section 234B is levied if the advance tax paid by the due date of filing return of income is less than 90% of the assessed tax. The interest under Section 234C is levied if the advance tax paid in an instalment is less than the prescribed percentage. The prescribed percentages for payment of advance tax in instalments are as follows: Due date for payment of advance tax - Advance tax to be payable: On or before June 15 of the previous year - At least 15% of advance tax. On or before September 15 of the previous year - At least 45% of advance tax. On or before December 15 of the previous year - At least 75% of advance tax. On or before March 15 of the previous year - 100% of advance tax. The rate of interest under Section 234C is 1% per month or part thereof. Assumptions: The user is an Indian resident. The user has a tax liability of Rs. 10,000 or more. Clarifications: The user should consult a tax professional to determine the exact amount of interest payable under Section 234B and Section 234C. The user should ensure that they pay the advance tax in accordance with the prescribed due dates to avoid interest liability. Note: The above response is based on the provided context and is intended to provide general information only. It is not intended to be a substitute for professional tax advice. Users are advised to consult a tax professional for specific guidance on their individual tax situations. Primary Parent Topics: Interest and Fees - Interest for deferment of Advance Tax, Advance Tax - Advance Tax. Disclaimer: The information contained in this communication is intended solely for the use of the individual or entity to whom it is addressed and others authorized to receive it. It may contain confidential or legally privileged information. If you are not the intended recipient, you are hereby notified that any disclosure, copying, distribution, or taking any action in reliance on the contents of this information is strictly prohibited and may be unlawful. If you have received this communication in error, please notify us immediately by responding to this email and then delete it from your system. The firm is neither liable for the proper and complete transmission of the information contained in this communication nor for any delay in its receipt.",
+      A: `
+      Eligibility for Presumptive Scheme under Section 44ADA The presumptive
+scheme under Section 44ADA is applicable to resident assessees who are
+individuals, Hindu Undivided Families (HUF), or partnership firms, but it
+expressly excludes Limited Liability Partnerships (LLPs).
+Ineligible Entities LLPs and companies are not eligible to take advantage of the
+presumptive scheme under Section 44ADA.
+Eligible Entities The following entities are eligible for the presumptive scheme
+under Section 44ADA:
+1. Individuals
+2. Hindu Undivided Families (HUF)
+3. Partnership firms (excluding LLPs)
+This information is based on the provided context, which states that a resident
+Individual or Partnership Firm (excluding LLP) can claim the presumptive tax
+scheme under Section 44ADA.
+Primary Parent Topics:
+1. Business or Profession Presumptive Scheme for Professionals under
+Section 44ADA
+1. Business or Profession Presumptive Scheme for Businesses under
+Section 44AD`,
       B:  `
       Legal Research Memorandum
       
