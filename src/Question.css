@@ -38,4 +38,18 @@
   .save-button:active {
     background-color: #3e8e41;
   }
-  
+  .answer-content h1,
+.answer-content h2,
+.answer-content h3 {
+  font-weight: bold;
+}
+
+.answer-content p {
+  margin-bottom: 1em;
+  line-height: 1.6;
+}
+
+.answer-content ul {
+  padding-left: 1.2em;
+  list-style-type: disc;
+}

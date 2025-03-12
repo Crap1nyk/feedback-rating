@@ -13,28 +13,43 @@ const questions = [
   {
     id: 1,
     question: "Can I take benefit of presumptive scheme in LLP or company?",
-  
+
     answers: {
       A: `
-      Eligibility for Presumptive Scheme under Section 44ADA
-The presumptive scheme under Section 44ADA is applicable to resident assessees who are individuals, Hindu Undivided Families (HUF), or partnership firms, but it expressly excludes Limited Liability Partnerships (LLPs).
+## **Eligibility for Presumptive Scheme under Section 44ADA**
 
-Ineligible Entities
-LLPs and companies are not eligible to take advantage of the presumptive scheme under Section 44ADA.
+The presumptive scheme under **Section 44ADA** is applicable to resident assessees who are:
+- **Individuals**
+- **Hindu Undivided Families (HUF)**
+- **Partnership firms** (but **expressly excludes** Limited Liability Partnerships (LLPs)).
 
-Eligible Entities
-The following entities are eligible for the presumptive scheme under Section 44ADA:
-1. Individuals
-2. Hindu Undivided Families (HUF)
-3. Partnership firms (excluding LLPs)
+---
 
-This information is based on the provided context, which states that a resident Individual or Partnership Firm (excluding LLP) can claim the presumptive tax scheme under Section 44ADA.
+## **Ineligible Entities**
+- **LLPs** and **companies** are **not eligible** to take advantage of the presumptive scheme under **Section 44ADA**.
 
-Primary Parent Topics:
-1. Business or Profession Presumptive Scheme for Professionals under Section 44ADA
-2. Business or Profession Presumptive Scheme for Businesses under Section 44AD
+---
+
+## **Eligible Entities**
+
+The following entities **are eligible** for the presumptive scheme under **Section 44ADA**:
+1. **Individuals**
+2. **Hindu Undivided Families (HUF)**
+3. **Partnership firms** (excluding LLPs)
+
+---
+
+## **Additional Information**
+
+This information is based on the provided context, which states that a **resident Individual** or **Partnership Firm** (excluding LLP) can claim the presumptive tax scheme under **Section 44ADA**.
+
+---
+
+## **Primary Parent Topics:**
+
+1. **Business or Profession Presumptive Scheme for Professionals under Section 44ADA**
+2. **Business or Profession Presumptive Scheme for Businesses under Section 44AD**
 `,
-
 
       B: `Legal Research Memorandum
 
@@ -289,11 +304,13 @@ References:
         />
   
         <div className="content">
-          <TopNav
-            selectedAnswerKey={selectedAnswerKey}
-            onSelectAnswer={handleSelectAnswer}
-          />
-  
+        <TopNav
+  selectedAnswerKey={selectedAnswerKey}
+  onSelectAnswer={handleSelectAnswer}
+  reviewStatus={reviewStatus}
+  currentQuestionId={selectedQuestion.id}
+/>
+
           <QuestionDetail
             selectedQuestion={selectedQuestion}
             selectedAnswerKey={selectedAnswerKey}

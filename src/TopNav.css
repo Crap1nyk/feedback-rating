@@ -1,29 +1,56 @@
 .topnav {
-    display: flex;
-    gap: 10px;
-    padding: 10px;
-    background: #ecf0f1;
-    border-radius: 8px;
-    margin-bottom: 20px;
-  }
-  
-  .topnav button {
-    padding: 10px 15px;
-    border: none;
-    cursor: pointer;
-    background: #bdc3c7;
-    border-radius: 5px;
-    transition: 0.3s;
-  }
-  
-  .topnav button.active {
-    background: #3498db;
-    color: white;
-    font-weight: bold;
-  }
-  
-  .topnav button:hover {
-    background: #2980b9;
-    color: white;
-  }
-  
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  background: #ecf0f1;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.answer-button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  background: #bdc3c7;
+  color: #2c3e50;
+  border-radius: 5px;
+  transition: 0.3s ease;
+  font-size: 16px;
+  position: relative;
+}
+
+/* Hover effect */
+.answer-button:hover {
+  background: #2980b9;
+  color: #ffffff;
+}
+
+/* Selected answer */
+.answer-button.active {
+  background: #3498db;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/* Reviewed state */
+.answer-button.reviewed {
+  background: #27ae60; /* Green */
+  color: #ffffff;
+}
+
+/* Active + Reviewed combo */
+.answer-button.active.reviewed {
+  background: #1e8449; /* Darker green */
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/* Review checkmark styling */
+.reviewed-indicator {
+  margin-left: 5px;
+  color: #ffffff;
+  font-size: 14px;
+}
