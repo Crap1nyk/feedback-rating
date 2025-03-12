@@ -137,8 +137,8 @@ Presumptive taxation is a simplified tax compliance method for small taxpayers, 
 ## **Conclusion**
 
 In conclusion:  
-- **LLPs** are **not eligible** for the presumptive taxation scheme under **Sections 44AD and 44ADA**.  
-- **Companies** are **generally not eligible**, but may be eligible under **Section 44AE** if they meet the specified conditions.
+ **LLPs** are **not eligible** for the presumptive taxation scheme under **Sections 44AD and 44ADA**.  
+ **Companies** are **generally not eligible**, but may be eligible under **Section 44AE** if they meet the specified conditions.
 
 
 
