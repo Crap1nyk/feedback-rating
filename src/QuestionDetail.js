@@ -13,7 +13,7 @@ const QuestionDetail = ({ selectedQuestion, selectedAnswerKey, ratings, onRating
       <div
         className="answer-container"
         style={{
-          maxHeight: '300px',
+          maxHeight: '450px',
           overflowY: 'auto',
           backgroundColor: '#ffffff',
           padding: '1em',
@@ -22,8 +22,8 @@ const QuestionDetail = ({ selectedQuestion, selectedAnswerKey, ratings, onRating
           border: '1px solid #ddd',
           boxShadow: '0px 2px 6px rgba(0,0,0,0.1)',
           color: '#333',
-          marginLeft: '20px', // left margin
-          marginRight: '20px'
+          marginLeft: '5px', // left margin
+          marginRight: '5px'
         }}
       >
         <div className="answer-content">
@@ -39,8 +39,8 @@ const QuestionDetail = ({ selectedQuestion, selectedAnswerKey, ratings, onRating
                     color: '#2a2a2a',
                     borderBottom: '1px solid #eee',
                     paddingBottom: '0.4rem',
-                    marginLeft: '20px', // left margin
-                    marginRight: '20px'
+                    marginLeft: '5px', // left margin
+                    marginRight: '5px'
                   }}
                   {...props}
                 />
@@ -53,8 +53,8 @@ const QuestionDetail = ({ selectedQuestion, selectedAnswerKey, ratings, onRating
                     marginTop: '1rem',
                     marginBottom: '0.5rem',
                     color: '#444',
-                    marginLeft: '20px', // left margin
-                    marginRight: '20px'
+                    marginLeft: '5px', // left margin
+                    marginRight: '5px'
                   }}
                   {...props}
                 />
@@ -74,8 +74,8 @@ const QuestionDetail = ({ selectedQuestion, selectedAnswerKey, ratings, onRating
                   style={{
                     paddingLeft: '1.5rem',
                     marginBottom: '1rem',
-                    marginLeft: '20px', // left margin
-                    marginRight: '20px'
+                    marginLeft: '5px', // left margin
+                    marginRight: '5px'
                   }}
                   {...props}
                 />
