@@ -5,6 +5,8 @@ import QuestionDetail from './QuestionDetail';
 import * as XLSX from 'xlsx';
 import './App.css';
 import { auth } from './firebase';
+import { signOut } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -1154,6 +1156,15 @@ The borrower **defaults**, and the bank writes off the amount as a bad debt.
     const [user, setUser] = useState(null);
     const [reviewStatus, setReviewStatus] = useState({});
     const [reviewDataList, setReviewDataList] = useState([]); // NEW STATE TO STORE ALL REVIEWS
+ 
+
+const navigate = useNavigate();
+
+    const handleLogout = () => {
+      signOut(auth).then(() => {
+        navigate('/login'); // or wherever your login page is
+      });
+    };
   
     // Load user on mount
     useEffect(() => {
@@ -1274,8 +1285,19 @@ The borrower **defaults**, and the bank writes off the amount as a bad debt.
           onSelectQuestion={handleSelectQuestion}
           reviewStatus={reviewStatus}
         />
+
+
   
         <div className="content">
+        <div style={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          padding: '10px'
+        }}>
+          <button id="logout-button" onClick={handleLogout} style={{ backgroundColor: 'red', color: 'white', padding: '8px 12px', border: 'none', borderRadius: '4px' }}>
+            Logout
+          </button>
+        </div>
         <TopNav
   selectedAnswerKey={selectedAnswerKey}
   onSelectAnswer={handleSelectAnswer}
