@@ -21,7 +21,9 @@ const QuestionDetail = ({ selectedQuestion, selectedAnswerKey, ratings, onRating
           marginTop: '1em',
           border: '1px solid #ddd',
           boxShadow: '0px 2px 6px rgba(0,0,0,0.1)',
-          color: '#333'
+          color: '#333',
+          marginLeft: '20px', // left margin
+          marginRight: '20px'
         }}
       >
         <div className="answer-content">
@@ -36,7 +38,9 @@ const QuestionDetail = ({ selectedQuestion, selectedAnswerKey, ratings, onRating
                     marginBottom: '0.8rem',
                     color: '#2a2a2a',
                     borderBottom: '1px solid #eee',
-                    paddingBottom: '0.4rem'
+                    paddingBottom: '0.4rem',
+                    marginLeft: '20px', // left margin
+                    marginRight: '20px'
                   }}
                   {...props}
                 />
@@ -48,7 +52,9 @@ const QuestionDetail = ({ selectedQuestion, selectedAnswerKey, ratings, onRating
                     fontWeight: '600',
                     marginTop: '1rem',
                     marginBottom: '0.5rem',
-                    color: '#444'
+                    color: '#444',
+                    marginLeft: '20px', // left margin
+                    marginRight: '20px'
                   }}
                   {...props}
                 />
@@ -67,7 +73,9 @@ const QuestionDetail = ({ selectedQuestion, selectedAnswerKey, ratings, onRating
                 <ul
                   style={{
                     paddingLeft: '1.5rem',
-                    marginBottom: '1rem'
+                    marginBottom: '1rem',
+                    marginLeft: '20px', // left margin
+                    marginRight: '20px'
                   }}
                   {...props}
                 />
@@ -76,7 +84,9 @@ const QuestionDetail = ({ selectedQuestion, selectedAnswerKey, ratings, onRating
                 <li
                   style={{
                     marginBottom: '0.5rem',
-                    color: '#333'
+                    color: '#333',
+                    marginLeft: '20px', // left margin
+                    marginRight: '20px'
                   }}
                   {...props}
                 />
