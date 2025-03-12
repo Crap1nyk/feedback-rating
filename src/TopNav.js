@@ -25,7 +25,7 @@ const TopNav = ({
             {answerKey}
             {isReviewed && (
               <span className="reviewed-indicator" title="Reviewed">
-                ✔️
+                ✅
               </span>
             )}
           </button>
