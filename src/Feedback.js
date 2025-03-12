@@ -1230,7 +1230,7 @@ const navigate = useNavigate();
         username,
         questionId,
         answerId,
-        correctness: correctness ? 1 : 0,
+        correctness: ratings.correctness ? 1 : 0,
         accuracy: ratings.accuracy || 0,
         clarity: ratings.clarity || 0,
         completeness: ratings.completeness || 0,
